@@ -1,7 +1,8 @@
+#include <Arduino.h>
 #include <SoftwareSerial.h>
 
-#define arduino_rx = 2;
-#define arduino_tx = 3;
+#define arduino_rx 2
+#define arduino_tx 3
 
 SoftwareSerial mySerial(arduino_rx, arduino_tx);
 
