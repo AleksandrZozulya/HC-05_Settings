@@ -1,18 +1,30 @@
 #include <Arduino.h>
+#include <SoftwareSerial.h>
 
-// put function declarations here:
-int myFunction(int, int);
+SoftwareSerial bluetooth(2, 3); // RX, TX
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  bluetooth.begin(9600);      // Скорость для AT-команд (обычно 9600)
+  Serial.begin(115200);       // Для отладки
+
+  delay(1000); // Небольшая задержка перед началом
+
+  Serial.println("Sending rename command...");
+
+  // Переименовать модуль на "My_BT_Device"
+  bluetooth.println("AT+NAME=My_BT_Device");
+
+  delay(1000); // Ждем ответ
+
+  // Показать ответ от модуля
+  while (bluetooth.available()) {
+    char c = bluetooth.read();
+    Serial.print(c);
+  }
+
+  Serial.println("\nRename command sent.");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  // Ничего не делаем
 }
