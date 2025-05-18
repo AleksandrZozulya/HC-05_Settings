@@ -1,31 +1,31 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-SoftwareSerial bt(2, 3); // RX (to HC-05 TX), TX (to HC-05 RX)
+//SoftwareSerial Serial3(2, 3); // RX (to HC-05 TX), TX (to HC-05 RX)
 
 String inputName = "";
 bool nameSent = false;
 
-void chooseBtName(); // Call this in loop()
-void changeBtName(); // Call this in setup() if needed
+void chooseSerial3Name(); // Call this in loop()
+void changeSerial3Name(); // Call this in setup() if needed
 
 void setup()
 {
-  bt.begin(9600);       // Baud rate for AT commands (usually 9600)
+  Serial3.begin(9600);       // Baud rate for AT commands (usually 9600)
   Serial.begin(115200); // For serial monitor communication
 
   delay(1000);
 
   // Uncomment the line below to send a fixed name automatically at startup:
-  // changeBtName();
+   changeSerial3Name();
 }
 
 void loop()
 {
-  chooseBtName();
+  //chooseSerial3Name();
 }
 
-void chooseBtName()
+void chooseSerial3Name()
 {
   // Read input from serial monitor
   if (Serial.available())
@@ -36,7 +36,7 @@ void chooseBtName()
       if (inputName.length() > 0 && !nameSent)
       {
         String command = "AT+NAME=" + inputName;
-        bt.println(command);
+        Serial3.println(command);
 
         Serial.print("Command sent: ");
         Serial.println(command);
@@ -49,27 +49,27 @@ void chooseBtName()
     }
   }
 
-  // Read response from the BT module
-  if (bt.available())
+  // Read response from the Serial3 module
+  if (Serial3.available())
   {
-    char c = bt.read();
+    char c = Serial3.read();
     Serial.print(c);
   }
 }
 
-void changeBtName()
+void changeSerial3Name()
 {
   Serial.println("Sending rename command...");
 
-  // Rename the module to "My_BT_Device"
-  bt.println("AT+NAME=My_BT_Device");
+  // Rename the module to "My_Serial3_Device"
+  Serial3.println("AT+NAME=L-0659");
 
   delay(1000); // Wait for a response
 
-  // Print response from the BT module
-  while (bt.available())
+  // Print response from the Serial3 module
+  while (Serial3.available())
   {
-    char c = bt.read();
+    char c = Serial3.read();
     Serial.print(c);
   }
 
