@@ -8,13 +8,13 @@ SoftwareSerial mySerial(arduino_rx, arduino_tx);
 
 void setup() {
   Serial.begin(9600);
-  mySerial.begin(9600);
+  mySerial.begin(38400);
 
   Serial.print("Connect...");
 
   while (!mySerial.available()) {
     Serial.print(".");
-    mySerial.println("AT");
+    mySerial.println("AT+ADDR");
     delay(500);  
   }
 
